@@ -68,18 +68,16 @@
       </div>
     </header>
     @if (session()->has('success'))
+    <div class="container container--narrow">
+      <div class="alert alert-success  text-center">
+        {{session ('success')}}
+      </div>
+    </div>
+  @endif
+  @if (session()->has('failure'))
   <div class="container container--narrow">
-    @php
-      $sessionMessage = session('success');
-      $alertClass = '';
-      if (strpos($sessionMessage, 'logged in') !== false) {
-        $alertClass = 'alert-success';
-      } elseif (strpos($sessionMessage, 'logged out') !== false) {
-        $alertClass = 'alert-danger';
-      }
-    @endphp
-    <div class="alert alert-success {{$alertClass}} text-center">
-      {{$sessionMessage}}
+    <div class="alert alert-danger  text-center">
+      {{session ('failure')}}
     </div>
   </div>
 @endif

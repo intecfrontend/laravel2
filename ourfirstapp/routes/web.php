@@ -40,6 +40,7 @@ Route::post('/create-follow/{user:username}', [FollowController::class, 'removeF
 Route::get('/create-post', [PostController::class, 'showCreateForm'])->middleware('auth');
 Route::post('/create-post', [PostController::class, 'storeNewPost'])->middleware('auth');
 Route::get('/post/{post}', [PostController::class, 'viewSinglePost'])->middleware('auth');
+// {pizza} line 42
 Route::delete('/post/{post}', [PostController::class, 'delete'])->middleware('can:delete,post');
 
 
