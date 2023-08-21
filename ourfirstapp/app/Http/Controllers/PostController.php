@@ -24,7 +24,7 @@ return back()->with('success', 'Post updated successfully');}
 $post->delete();
 return redirect('/profile/'.auth()->user()->username)->with('success','Post successfully deleted');
     }
-    // {pizza} line 42 here 28 hinting
+    // {user} line 42 here 28 hinting
     public function viewSinglePost(Post $post){
         return view('single-post', ['post' => $post]);
         //we are using the info inside the single-post blade

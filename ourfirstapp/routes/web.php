@@ -30,16 +30,16 @@ Route::get('/admins-only', function(){
 Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login');
 Route::post('/register', [UserController::class, "register"])->middleware('guest');
 Route::post('/login', [UserController::class, "login"])->middleware('guest');
-Route::post('/logout', [UserController::class, "logout"])->middleware('auth');
-Route::get('/manage-avatar', [UserController::class, 'showAvatarForm'])->middleware('auth');
-Route::post('/manage-avatar', [UserController::class, 'storeAvatar'])->middleware('auth');
+Route::post('/logout', [UserController::class, "logout"])->middleware('mustBeLoggedIn');
+Route::get('/manage-avatar', [UserController::class, 'showAvatarForm'])->middleware('mustBeLoggedIn');
+Route::post('/manage-avatar', [UserController::class, 'storeAvatar'])->middleware('mustBeLoggedIn');
 
-Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('auth');;
-Route::post('/create-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('auth');;
+Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('mustBeLoggedIn');
+Route::post('/create-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('mustBeLoggedIn');
 // Blog post related routes
-Route::get('/create-post', [PostController::class, 'showCreateForm'])->middleware('auth');
-Route::post('/create-post', [PostController::class, 'storeNewPost'])->middleware('auth');
-Route::get('/post/{post}', [PostController::class, 'viewSinglePost'])->middleware('auth');
+Route::get('/create-post', [PostController::class, 'showCreateForm'])->middleware('mustBeLoggedIn');
+Route::post('/create-post', [PostController::class, 'storeNewPost'])->middleware('mustBeLoggedIn');
+Route::get('/post/{post}', [PostController::class, 'viewSinglePost'])->middleware('mustBeLoggedIn');
 // {pizza} line 42
 Route::delete('/post/{post}', [PostController::class, 'delete'])->middleware('can:delete,post');
 
@@ -49,5 +49,4 @@ Route::get('/post/{post}/edit', [PostController::class, 'showEditForm'])->middle
 Route::put('/post/{post}', [PostController::class, 'actuallyUpdate'])->middleware('can:update,post');
 
 //viewSinglePost
-
 Route::get('/profile/{nameConnector:username}', [UserController::class, 'profile']);

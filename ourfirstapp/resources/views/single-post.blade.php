@@ -18,8 +18,8 @@
       </div>
 
       <p class="text-muted small mb-4">
-        <a href="#"><img class="avatar-tiny" src="{{$post->pizza->avatar}}" /></a>
-        Posted by <a href="#">{{$post->pizza->username}}</a> on {{$post->created_at->format('j/n/Y')}}
+        <a href="#"><img class="avatar-tiny" src="{{$post->user->avatar}}" /></a>
+        Posted by <a href="#">{{$post->user->username}}</a> on {{$post->created_at->format('j/n/Y')}}
       </p>
 
       <div class="body-content">
