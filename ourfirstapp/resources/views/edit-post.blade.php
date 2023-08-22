@@ -18,7 +18,7 @@
           <textarea required name="body" id="post-body" class="body-content tall-textarea form-control" 
           type="text"> {{old('body', $post->body)}}</textarea>
         </div>
-
+{{-- // ** so it will display the old input (if available) or the current body content of the post. --}}
         <button class="btn btn-primary">Save changes</button>
       </form>
     </div>
