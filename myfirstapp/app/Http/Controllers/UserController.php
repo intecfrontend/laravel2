@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -39,7 +40,14 @@ class UserController extends Controller
     }
 
     public function profile(User $user) {
-        return view('profile-posts', ['avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+        $currentlyFollowing = 0;
+
+        $currentlyFollowing = 
+        Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+// letop this was called existcheck in FollowController
+
+
+        return view('profile-posts', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
 
     public function logout() {
