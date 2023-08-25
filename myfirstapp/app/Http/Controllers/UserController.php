@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,17 @@ class UserController extends Controller
     public function showAvatarForm() {
         return view('avatar-form');
     }
+private function getSharedData() {
+    $currentlyFollowing = 0;
 
+    $currentlyFollowing = 
+    Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+// letop this was called existcheck in FollowController
+    return view('profile-posts', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+
+    View::share('sharedData', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    // letop we can share a variable and it will be available in our blade profile
+}
     public function profile(User $user) {
         $currentlyFollowing = 0;
 
@@ -48,6 +59,28 @@ class UserController extends Controller
 
 
         return view('profile-posts', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    }
+
+    public function profileFollowers(User $user) {
+        $currentlyFollowing = 0;
+
+        $currentlyFollowing = 
+        Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+// letop this was called existcheck in FollowController
+
+
+        return view('profile-followers', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    }    
+    
+    public function profileFollowing(User $user) {
+        $currentlyFollowing = 0;
+
+        $currentlyFollowing = 
+        Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+// letop this was called existcheck in FollowController
+
+
+        return view('profile-following', ['currentlyFollowing' => $currentlyFollowing, 'avatar' => $user->avatar, 'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
 
     public function logout() {
@@ -62,6 +95,7 @@ class UserController extends Controller
             return view('homepage');
         }
     }
+
 
     public function login(Request $request) {
         $incomingFields = $request->validate([
