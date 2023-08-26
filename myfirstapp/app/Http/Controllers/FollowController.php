@@ -13,7 +13,6 @@ class FollowController extends Controller
         if ($user->id == auth()->user()->id) {
             return back()->with('failure', 'You cannot follow yourself.');
         }
-
         // you cannot follow someone you're already following
         $existCheck = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
 

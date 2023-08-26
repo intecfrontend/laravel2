@@ -16,11 +16,8 @@ class UserController extends Controller
         $request->validate([
             'avatar' => 'required|image|max:3000'
         ]);
-
         $user = auth()->user();
-
         $filename = $user->id . '-' . uniqid() . '.jpg';
-
         $imgData = Image::make($request->file('avatar'))->fit(120)->encode('jpg');
         Storage::put('public/avatars/' . $filename, $imgData);
 
