@@ -1,5 +1,5 @@
-<x-profile :avatar="$avatar" :currentlyFollowing="$currentlyFollowing" :postCount="$postCount" :username="$username">
-{{-- letop syntax for dynamic values --}}
+<x-profile :sharedData="$sharedData">
+  {{-- letop syntax for dynamic values --}}
   <div class="list-group">
     @foreach($posts as $post)
     <a href="/post/{{$post->id}}" class="list-group-item list-group-item-action">
